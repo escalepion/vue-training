@@ -1,39 +1,66 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://github.com/vuejs/vue-cli/tree/dev/docs" target="_blank">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org/en/essentials/getting-started.html" target="_blank">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org/en/intro.html" target="_blank">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org/en" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <h1>{{ msg }} {{ akif }}</h1>
+    <p><button @click="clicking()">button</button></p>
+    <p v-bind:title="akif">Hover over me and look at title</p>
+    <h1>Change seen status</h1>
+    <p><button v-on:click="hanleChangeClick">Change status</button></p>
+    <transition name="fade">
+      <p v-if="seen">Now you see me</p>
+    </transition>
+    <h1>Input events</h1>
+    <p>{{ inputData }}</p>
+    <input v-model="inputData" >
+    <ForLoop />
+    <TemplateSyntax />
+    <ComputedProperties />
+    <WatchProperties />
+    <ClassAndStyle />
+    <IfThenElse />
+    <Todo />
+    <Forms />
   </div>
 </template>
 
 <script>
+import ForLoop from './ForLoop.vue';
+import TemplateSyntax from './TemplateSyntax';
+import ComputedProperties from './ComputedProperties';
+import WatchProperties from './WatchProperties';
+import ClassAndStyle from './ClassAndStyle';
+import IfThenElse from './IfThenElse';
+import Todo from './Todo';
+import Forms from './Forms';
+
 export default {
   name: 'HelloWorld',
+  components: {
+    ForLoop,
+    TemplateSyntax,
+    ComputedProperties,
+    WatchProperties,
+    ClassAndStyle,
+    IfThenElse,
+    Todo,
+    Forms
+  },
   props: {
     msg: String
+  },
+  methods: {
+  clicking () {
+    this.akif = 'degisti'
+  },
+  hanleChangeClick () {
+    this.seen = !this.seen;
+  }
+  },
+  data() {
+    return {
+      akif: 'deneme',
+      seen: true,
+      inputData: 'input default data'
+    };
   }
 }
 </script>
@@ -43,15 +70,11 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
